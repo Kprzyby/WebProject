@@ -1,0 +1,103 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<style>
+    .tableCell{
+        text-align:center;
+        vertical-align:middle;
+    }
+</style>
+
+<head>
+    <!--Toastr notifications are used is the user agreed-->
+    @if(HttpContext.Request.Cookies["ToastrAgreement"]!=null)
+    {
+        <partial name="_ToastrPartial" />
+    }
+</head>
+<body>
+<a class="btn btn-primary" asp-page="Products/CreateProduct" style="float:left;display:inline-block;"><i class="bi bi-plus-square"></i>&nbsp;Create a product</a>
+
+<!--The button is added to the page only if the user has admin privileges, it will not be
+    created for other users
+-->
+@if (HttpContext.Request.Cookies["UserIsAdmin"] != null)
+{
+    <a class="btn btn-primary" asp-page="AddUser" style="float:right;display:inline-block;"><i class="bi bi-person-plus"></i>&nbsp;Add user</a>
+}
+
+<br /><br />
+
+<div class="container">
+    <h2>Product list</h2>
+    <br /><br />
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th class="tableCell">Id</th>
+                <th class="tableCell">Name</th>
+                <th class="tableCell">Price</th>
+                <th class="tableCell">Category</th>
+                <th class="tableCell">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in @Model.ProductList)
+            {
+                <tr>
+                    <td class="tableCell">@obj.id</td>
+                    <td class="tableCell">@obj.name</td>
+                    <td class="tableCell">@obj.price</td>
+                    <td class="tableCell">@Model.CategoryList.Find(e=>e.Id==@obj.CategoryId).longName</td>
+                    <td class="tableCell">
+                        <a class="btn btn-primary" asp-page="Products/EditProduct" asp-route-id="@obj.id"><i class="bi bi-pencil-square"></i>&nbsp;Edit</a>
+                        |
+                        <a class="btn btn-danger" asp-page="Products/DeleteProduct" asp-route-id="@obj.id"><i class="bi bi-trash"></i>&nbsp;Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br /><br />
+<div style="float:left;">
+    <p><b>Find products in a price range</b></p><br />
+    <form method="post">
+        <input asp-for="@Model.lowerPrice"/>
+        <span asp-validation-for="@Model.lowerPrice" class="text-danger"></span><br /><br />
+        to
+        <br /><br /><input asp-for="@Model.higherPrice"/>
+        <span asp-validation-for="@Model.higherPrice" class="text-danger"></span><br /><br />
+        <button class="btn-primary btn" type="submit" asp-page-handler="FilterByPrice"><i class="bi bi-search"></i>&nbsp;Find</button>
+    </form>
+</div>
+<div style="float:right;">
+    <p><b>Find products in a chosen category</b></p>&nbsp;<br />
+    <form method="post">
+        <center>
+            <!--The user can only choose the categories that have any products-->
+            <select id="categoryId" name="categoryId">
+            @foreach(var category in @Model.CategoryList.FindAll(e=>@Model.ProductList.Find(x=>x.CategoryId==e.Id)!=default))
+            {
+                <option value=@category.Id>@category.longName</option>
+            }
+            </select>
+            <button class="btn-primary btn" type="submit" asp-page-handler="FilterByCategory"><i class="bi bi-search"></i>&nbsp;Find</button>
+        </center>
+    </form>
+</div>
+
+<div class="text-center" style="clear:both">
+    <br /><br />
+    <a class="btn btn-primary" asp-page="Categories/Index">Go to Categories</a>
+</div>
+</body>

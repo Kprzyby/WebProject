@@ -1,0 +1,23 @@
+﻿<script defer>
+    //this script implements throttling on the button that submits the forms
+    setTimeout(()=>
+    {
+        let throttleButton=document.querySelector("#throttleButton");
+        let form=document.querySelector("form");
+
+        function throttleFunction(delay, submitFunction)
+        {
+            let lastCall=0;
+            return function()
+            {
+                const now=(new Date).getTime();
+                if(now-lastCall<delay) return;
+
+                lastCall=now;
+                return submitFunction();
+            }
+        }
+        const clickHandler=throttleFunction(500, ()=>{form.submit()});
+        throttleButton.addEventListener("click", clickHandler);
+    },200);
+</script>

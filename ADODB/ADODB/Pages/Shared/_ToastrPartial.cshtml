@@ -1,0 +1,17 @@
+﻿<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<!--creates a warning notification if a user tried to enter a page he has no access to-->
+@if(TempData["AccessDenied"]!=null)
+{
+    <script>
+        toastr.warning('@TempData["AccessDenied"]');
+    </script>
+}
+<!--creates notifications concering the CRUD, login and logout actions-->
+@if(TempData["Notification"]!=null)
+{
+    <script>
+        toastr.success('@TempData["Notification"]');
+    </script>
+}

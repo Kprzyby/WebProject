@@ -1,0 +1,34 @@
+﻿@page
+@model ADODB.Pages.CreateModel
+@{
+}
+<head>
+    <partial name="_ThrottlePartial" />
+</head>
+<body>
+    <form method="post">
+    <h2> Create a product</h2>
+    <hr />
+    <br /><br />
+    <div class="p-4" style="box-sizing:border-box;border:1px solid;">
+        <label asp-for="@Model.product.CategoryId"></label>
+        <select asp-for="@Model.product.CategoryId">
+            @foreach(var item in @Model.CategoryList)
+            {
+                <option value="@item.Id">@item.shortName</option>
+            }
+        </select>
+        <br /><br />
+        <label asp-for="@Model.product.name"></label>
+        <input asp-for="@Model.product.name" />
+        <span class="text-danger" asp-validation-for="@Model.product.name"></span>
+        <br /><br />
+        <label asp-for="@Model.product.price"></label>
+        <input asp-for="@Model.product.price" />
+        <span class="text-danger" asp-validation-for="@Model.product.price"></span>
+        <br /><br />
+        <button id="throttleButton" class="btn btn-primary" type="submit">Submit</button>
+    </div>
+    </form>
+</body>
+

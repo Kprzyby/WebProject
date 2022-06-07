@@ -1,0 +1,68 @@
+﻿@page
+@model ADODB.Pages.Categories.IndexModel
+@{
+}
+<style>
+    th,td{
+        text-align:center;
+        vertical-align:middle;
+    }
+</style>
+
+<head>
+    <!--Toastr notifications are used is the user agreed-->
+    @if(HttpContext.Request.Cookies["ToastrAgreement"]!=null)
+    {
+        <partial name="_ToastrPartial" />
+    }
+</head>
+<body>
+    <a class="btn btn-primary" asp-page="CreateCategory"><i class="bi bi-plus-square"></i>&nbsp;Create a category</a>
+    <br /><br />
+
+    <div class="container">
+        <h2>Category list</h2>
+        <br /><br />
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-2"></div>
+            <div class="col-3"></div>
+            <div class="col-1"></div>
+            <div class="col-1"></div>
+            <div class="col-4"></div>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Short name</th>
+                    <th>Long name</th>
+                    <th>Products value</th>
+                    <th>Number of products</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(int i=0;i<@Model.CategoryList.Count;i++)
+                {
+                    <tr>
+                        <td>@Model.CategoryList[i].Id</td>
+                        <td>@Model.CategoryList[i].shortName</td>
+                        <td>@Model.CategoryList[i].longName</td>
+                        <td>@Model.ProductValues[i]</td>
+                        <td>@Model.ProductCounts[i]</td>
+                        <td>
+                            <a class="btn btn-primary" asp-page="EditCategory" asp-route-id="@Model.CategoryList[i].Id"><i class="bi bi-pencil-square"></i>&nbsp; Edit</a>
+                            |
+                            <a class="btn btn-danger" asp-page="DeleteCategory" asp-route-id="@Model.CategoryList[i].Id"><i class="bi bi-trash"></i>&nbsp; Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br /><br /><br />
+    <div class="text-center">
+        <a asp-page="../Index" class="btn btn-primary text-center">Go to products</a>
+    </div>
+</body>

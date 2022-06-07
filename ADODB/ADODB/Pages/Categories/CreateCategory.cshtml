@@ -1,0 +1,25 @@
+﻿@page
+@model ADODB.Pages.Categories.CreateModel
+@{
+}
+<head>
+    <partial name="_ThrottlePartial" />
+</head>
+<body>
+    <form method="post">
+        <h2> Create a category</h2>
+        <hr />
+        <br /><br />
+        <div class="p-4" style="box-sizing:border-box;border:1px solid;">
+            <label asp-for="@Model.Category.shortName"></label>
+            <input asp-for="@Model.Category.shortName" />
+            <span class="text-danger" asp-validation-for="@Model.Category.shortName"></span>
+            <br /><br />
+            <label asp-for="@Model.Category.longName"></label>
+            <input asp-for="@Model.Category.longName" />
+            <span class="text-danger" asp-validation-for="@Model.Category.longName"></span>
+            <br /><br />
+            <button id="throttleButton" class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </form>
+</body>

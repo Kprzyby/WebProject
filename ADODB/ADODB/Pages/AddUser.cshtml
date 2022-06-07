@@ -1,0 +1,35 @@
+﻿@page
+@model ADODB.Pages.AddUserModel
+@{
+}
+<head>
+    <partial name="_ThrottlePartial" />
+</head>
+<body>
+    <form method="post">
+    <div class="p-4" style="box-sizing:border-box;border:1px solid;">
+        <label asp-for="@Model.user.UserName"></label>
+        <input asp-for="@Model.user.UserName" />
+        <span asp-validation-for="@Model.user.UserName" class="text-danger"></span><br /><br />
+
+        <label asp-for="@Model.user.Password1"></label>
+        <input asp-for="@Model.user.Password1" />
+        <span asp-validation-for="@Model.user.Password1" class="text-danger"></span><br /><br />
+
+        <label asp-for="@Model.user.Password2"></label>
+        <input asp-for="@Model.user.Password2" />
+        <span asp-validation-for="@Model.user.Password2" class="text-danger"></span><br /><br />
+
+        <label asp-for="@Model.user.role"></label>
+        <select asp-for="@Model.user.role">
+            @foreach(string role in @Model.roles)
+            {
+                <option value=@role>@role</option>
+            }
+        </select><br /><br />
+    <button id="throttleButton" class="btn-primary btn" type="submit">Add user</button>
+    </div>
+    
+    </form>
+</body>
+

@@ -1,0 +1,54 @@
+﻿@page
+@model ADODB.Pages.AboutUsModel
+@{
+}
+<div id="gallery" style="text-align:center;">
+    
+</div>
+
+<script defer>
+    //this script uses flexbox to create a gallery of images
+    const gallery=document.querySelector("#gallery");
+
+    function CreateFlexContainer()
+    {
+        return new Promise((resolve,reject)=>{
+            const container=document.createElement("div");
+            container.style.display="flex";
+            container.style.flexFlow="row wrap";
+            container.style.justifyContent="center";
+            container.style.alignItems="flex-start";
+            container.style.alignContent="flex-start";
+
+            let image;
+
+            for(let i=1;i<=17;i++)
+            {
+                image=document.createElement("img");
+                image.style.height="140px";
+                image.style.width="280px";
+                image.classList.add("m-2");
+                image.src="images/Flag".concat(i.toString()+".jpg");
+
+                container.append(image);
+            }
+            resolve(container);
+        });
+    }
+
+    async function AppendGallery()
+    {
+        const container=await CreateFlexContainer();
+
+        const title=document.createElement("h1");
+        title.style.textAlign="center";
+        title.innerText="We offer our services in the following countries";
+
+        gallery.append(title);
+        gallery.append(document.createElement("br"));
+
+        return container;
+    }
+
+    AppendGallery().then(e=>gallery.append(e));
+</script>

@@ -1,0 +1,32 @@
+﻿@page
+@model ADODB.Pages.Login.UserLoginModel
+@{
+}
+
+<div class="container">
+    <form class="form-horizontal" method="post">
+        <div class="form-group">
+            <label asp-for="user.userName" class="control-label"></label>
+            <div class="col-sm-6">
+                <input asp-for="user.userName" class="form-control">
+                <span asp-validation-for="user.userName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="user.password" class="control-label col-sm-2"></label>
+            <div class="col-sm-6">
+                <input asp-for="user.password" class="form-control">
+                <span asp-validation-for="user.password" class="text-danger"></span>
+            </div>
+        </div>
+        <br />
+        <input asp-for="@Model.ToastrAgreement" type="checkbox" value="true" checked/>  
+        <label asp-for="@Model.ToastrAgreement">I want to receive notifications about my acctions</label>
+        <span asp-validation-for="@Model.ToastrAgreement" class="text-danger"></span>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <br /> <button class="btn btn btn-primary">Zatwierdź</button>
+            </div>
+        </div>
+    </form>
+</div>

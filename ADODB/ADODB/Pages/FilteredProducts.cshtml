@@ -1,0 +1,46 @@
+﻿@page
+@model ADODB.Pages.FilteredProductsModel
+@{
+}
+<style>
+    tr *{
+        text-align:center;
+        vertical-align:middle;
+    }
+</style>
+
+<div class="container">
+    <h2>Product list</h2>
+    <br /><br />
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-3"></div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var obj in @Model.filteredproducts)
+            {
+                <tr>
+                    <td>@obj.id</td>
+                    <td>@obj.name</td>
+                    <td>@obj.price</td>
+                    <td>@Model.categories.Find(e=>e.Id==@obj.CategoryId).longName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br /><br />
+<center>
+    <a class="btn-primary btn" asp-page="Index">Go back</a>
+</center>
